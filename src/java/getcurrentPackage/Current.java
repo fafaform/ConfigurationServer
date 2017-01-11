@@ -8,13 +8,14 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Current {
     public String Patient_ID;
     public String Device_ID;
-    public int Week_NO;
-    public int Day_NO;
+    public String Week_NO;
+    public String Day_NO;
     public String End_DateTime;
-    public int Time_NO;
-    public int NoDayinWeek;
-    public int NoSetinDay;
-    public int NoTimeinSet;
+    public String Time_NO;
+    public String NoDayinWeek;
+    public String NoSetinDay;
+    public String NoTimeinSet;
+    public String Set_NO;
     
 
 //    @XmlElement
@@ -32,48 +33,64 @@ public class Current {
 //    @XmlElement
     @XmlTransient
     public void setWeek_NO(int Week_NO) {
-        this.Week_NO = Week_NO;
+        if(Week_NO != 0){
+            this.Week_NO = Week_NO+"";
+        }else this.Week_NO = "null";
     }
 
 //    @XmlElement
     @XmlTransient
     public void setNoDayinWeek(int NoDayinWeek) {
-        this.NoDayinWeek = NoDayinWeek;
+        if(NoDayinWeek != 0){
+            this.NoDayinWeek = NoDayinWeek+"";
+        }else this.NoDayinWeek = "null";
     }
 
 //    @XmlElement
     @XmlTransient
     public void setNoSetinDay(int NoSetinDay) {
-        this.NoSetinDay = NoSetinDay;
+        if(NoSetinDay != 0){
+            this.NoSetinDay = NoSetinDay+"";
+        }else this.NoSetinDay = "null";
     }
 
 //    @XmlElement
     @XmlTransient
     public void setNoTimeinSet(int NoTimeinSet) {
-        this.NoTimeinSet = NoTimeinSet;
+        if(NoTimeinSet != 0){
+            this.NoTimeinSet = NoTimeinSet+"";
+        }else this.NoTimeinSet = "null";
     }
     
 //    @XmlElement
     @XmlTransient
     public void setDay_NO(int Day_NO) {
-        this.Day_NO = Day_NO;
+        if(Day_NO != 0){
+            this.Day_NO = Day_NO+"";
+        }else this.Day_NO = "null";
     }
 
 //    @XmlElement
     @XmlTransient
     public void setSet_NO(int Set_NO) {
-        this.Set_NO = Set_NO;
+        if(Set_NO != 0){
+            this.Set_NO = Set_NO+"";
+        }else this.Set_NO = "null";
     }
 
 //    @XmlElement
     @XmlTransient
     public void setTime_NO(int Time_NO) {
-        this.Time_NO = Time_NO;
+        if(Time_NO != 0){
+            this.Time_NO = Time_NO+"";
+        }else this.Time_NO = "null";
     }
     
     @XmlTransient
     public void setEnd_DateTime(String End_DateTime) {
-        this.End_DateTime = End_DateTime;
+        if(!End_DateTime.equals("0")){
+            this.End_DateTime = End_DateTime;
+        }else this.End_DateTime = "null";
     }
     
     public String getPatient_ID() {
@@ -84,32 +101,31 @@ public class Current {
         return Device_ID;
     }
 
-    public int getWeek_NO() {
+    public String getWeek_NO() {
         return Week_NO;
     }
 
-    public int getNoDayinWeek() {
+    public String getNoDayinWeek() {
         return NoDayinWeek;
     }
 
-    public int getNoSetinDay() {
+    public String getNoSetinDay() {
         return NoSetinDay;
     }
 
-    public int getNoTimeinSet() {
+    public String getNoTimeinSet() {
         return NoTimeinSet;
     }
-        public int Set_NO;
 
-    public int getDay_NO() {
+    public String getDay_NO() {
         return Day_NO;
     }
 
-    public int getSet_NO() {
+    public String getSet_NO() {
         return Set_NO;
     }
 
-    public int getTime_NO() {
+    public String getTime_NO() {
         return Time_NO;
     }
 

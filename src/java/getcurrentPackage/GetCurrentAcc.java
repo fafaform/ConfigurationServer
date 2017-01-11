@@ -12,16 +12,9 @@ import javax.xml.bind.Marshaller;
 
 public class GetCurrentAcc {
 
-    // configuration field
     private String Patient_ID;
-//    private String Staff_ID;
     private String Device_ID;
-    private int Week_NO;
-//    private String Threshold_DateTime;
-//    private int[] Threshold_ = new int[10];
-//    private int NoDayinWeek;
-//    private int NoSetinDay;
-//    private int NoTimeinSet;
+
     
     private Current getcurrent = new Current();
         

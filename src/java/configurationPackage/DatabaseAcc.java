@@ -16,12 +16,12 @@ public class DatabaseAcc {
     private String Patient_ID;
     private String Staff_ID;
     private String Device_ID;
-    private int Week_NO;
+    private String Week_NO;
     private String Threshold_DateTime;
-    private int[] Threshold_ = new int[10];
-    private int NoDayinWeek;
-    private int NoSetinDay;
-    private int NoTimeinSet;
+    private String[] Threshold_ = new String[10];
+    private String NoDayinWeek;
+    private String NoSetinDay;
+    private String NoTimeinSet;
     
     private Configurations getConfig = new Configurations();
         
@@ -58,7 +58,7 @@ public class DatabaseAcc {
     public void setConfiguration2(String pid, String did, String wno) {
         this.Patient_ID = pid;
         this.Device_ID = did;
-        this.Week_NO = Integer.parseInt(wno);
+        this.Week_NO = wno;
 //        String SELECT_QUERY = "SELECT * FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+Week_NO+"";
         String week = wno;
 
