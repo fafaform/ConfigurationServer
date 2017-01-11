@@ -31,6 +31,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(configurationPackage.DatabaseResource.class);
         resources.add(getcurrentPackage.GetCurrentResource.class);
+        resources.add(updateDatabase.UpdateDatabase.class);
     }
     
 }
