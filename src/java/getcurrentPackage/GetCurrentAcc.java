@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -64,8 +66,8 @@ public class GetCurrentAcc {
         Connection connection = null;
         try {
 //            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nbtcdb","root", "");
-//            connection = DriverManager.getConnection("jdbc:mysql://nbtcrehab.eng.psu.ac.th:3306/nbtcdb","nbtcAdmin", "Admin2558");
-            connection = DriverManager.getConnection("jdbc:mysql://172.31.0.99:3306/nbtcdb","nbtcAdmin", "Admin2558");
+            connection = DriverManager.getConnection("jdbc:mysql://nbtcrehab.eng.psu.ac.th:3306/nbtcdb","nbtcAdmin", "Admin2558");
+//            connection = DriverManager.getConnection("jdbc:mysql://172.31.0.99:3306/nbtcdb","nbtcAdmin", "Admin2558");
         } catch (SQLException e) {
             System.err.println("Connection Failed! Check output console");
             e.printStackTrace();
@@ -83,6 +85,7 @@ public class GetCurrentAcc {
             int week_NO = wno.getInt(wno.getRow());
             System.out.println("weekNO: "+week_NO);
             wno.beforeFirst();
+            wno.close();
             int nDinW;
             int nSinD;
             int nTinS;
@@ -90,29 +93,33 @@ public class GetCurrentAcc {
             int set_NO;
             int time_NO;
             String end_dateTime;
+            boolean noData = false;
                     
             if(week_NO != 0){
                 
-                String SELECT_QUERY_threshold_weekNO = "SELECT NoDayinWeek FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+"";
+                String SELECT_QUERY_threshold_weekNO = "SELECT NoDayinWeek FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+")";
                 ResultSet rs2 = stmt.executeQuery(SELECT_QUERY_threshold_weekNO);
                 rs2.last();
                 nDinW = rs2.getInt(rs2.getRow());
                 System.out.println("nDinW: "+nDinW);
                 rs2.beforeFirst();
+                rs2.close();
                 
-                String SELECT_QUERY_threshold_dayNO = "SELECT NoSetinDay FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+"";
+                String SELECT_QUERY_threshold_dayNO = "SELECT NoSetinDay FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+")";
                 ResultSet dt = stmt.executeQuery(SELECT_QUERY_threshold_dayNO);
                 dt.last();
                 nSinD = dt.getInt(dt.getRow());
                 System.out.println("nSinD: "+nSinD);
                 dt.beforeFirst();
+                dt.close();
                 
-                String SELECT_QUERY_threshold_setNO = "SELECT NoTimeinSet FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+"";
+                String SELECT_QUERY_threshold_setNO = "SELECT NoTimeinSet FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+")";
                 ResultSet st = stmt.executeQuery(SELECT_QUERY_threshold_setNO);
                 st.last();
                 nTinS = st.getInt(st.getRow());
                 System.out.println("nSinD: "+nTinS);
                 st.beforeFirst();
+                st.close();
                 
                 String SELECT_QUERY_patientWeek_dayNO = "SELECT MAX(Day_NO) FROM patient_week WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+"";
                 ResultSet dno = stmt.executeQuery(SELECT_QUERY_patientWeek_dayNO);
@@ -120,6 +127,7 @@ public class GetCurrentAcc {
                 day_NO = dno.getInt(dno.getRow());
                 System.out.println("dayNO: "+day_NO);
                 dno.beforeFirst();
+                dno.close();
                 
                 String SELECT_QUERY_patientWeek_setNO = "SELECT MAX(Set_NO) FROM patient_week WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+" AND Day_NO="+day_NO+"";
                 ResultSet sno = stmt.executeQuery(SELECT_QUERY_patientWeek_setNO);
@@ -127,6 +135,7 @@ public class GetCurrentAcc {
                 set_NO = sno.getInt(sno.getRow());
                 System.out.println("setNO: "+set_NO);
                 sno.beforeFirst();
+                sno.close();
                 
                 String SELECT_QUERY_patientWeek_timeNO = "SELECT MAX(Time_NO) FROM patient_week WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+" AND Day_NO="+day_NO+" AND Set_NO="+set_NO+"";
                 ResultSet tno = stmt.executeQuery(SELECT_QUERY_patientWeek_timeNO);
@@ -134,14 +143,16 @@ public class GetCurrentAcc {
                 time_NO = tno.getInt(tno.getRow());
                 System.out.println("timeNO: "+time_NO);
                 tno.beforeFirst();
+                tno.close();
                 
                 String SELECT_QUERY_patientWeek_enddatetime = "SELECT End_DateTime FROM patient_week WHERE Patient_Week_ID IN (SELECT MAX(Patient_Week_ID) FROM patient_week WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+" AND Day_NO="+day_NO+" AND Set_NO="+set_NO+" AND Time_NO="+time_NO+")";
 //                String SELECT_QUERY_patientWeek_enddatetime = "SELECT End_DateTime FROM patient_week WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week_NO+" AND Day_NO="+day_NO+" AND Set_NO="+set_NO+" AND Time_NO="+time_NO;
                 ResultSet edt = stmt.executeQuery(SELECT_QUERY_patientWeek_enddatetime);
                 edt.last();
-                end_dateTime = edt.getInt(edt.getRow())+"";
+                end_dateTime = edt.getString(edt.getRow());
                 System.out.println("end datetime: "+end_dateTime);
                 edt.beforeFirst();
+                edt.close();
             
             }else {
                 day_NO = 0;
@@ -151,31 +162,17 @@ public class GetCurrentAcc {
                 nSinD = 0;
                 nTinS = 0;
                 end_dateTime = "0";
+                noData = true;
             }
             
-//            String SELECT_QUERY;
-//            if(!week.equals("")){
-//                SELECT_QUERY = "SELECT * FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week+"";
-//                System.out.println("given week");
-//            }else if(day_NO >= nDinW || week_NO == 0){
-//                SELECT_QUERY = "SELECT * FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+(week_NO+1)+"";
-//                System.out.println("next week");
-//            }else{
-//                SELECT_QUERY = "SELECT * FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+(week_NO)+"";
-//                System.out.println("current week");
-//            }
-            
-//            ResultSet rs = stmt.executeQuery(SELECT_QUERY);
 
-//            System.out.println(config);
-//            while(rs.next()){
+//            if(nDinW == 0 && nSinD == 0 && nTinS == 0){
+//                getcurrent = new Current();
+//            }else{
             getcurrent = new Current();
-            
             getcurrent.setPatient_ID(Patient_ID);
-//            System.out.println(getcurrent.getPatient_ID());
             getcurrent.setDevice_ID(Device_ID);
             getcurrent.setWeek_NO(week_NO);
-//                        System.out.println(getcurrent.getWeek_NO());
             getcurrent.setDay_NO(day_NO);
             getcurrent.setSet_NO(set_NO);
             getcurrent.setTime_NO(time_NO);
@@ -183,41 +180,27 @@ public class GetCurrentAcc {
             getcurrent.setNoSetinDay(nSinD);
             getcurrent.setNoTimeinSet(nTinS);
             getcurrent.setEnd_DateTime(end_dateTime);
-            
-            
-                
-//                getconfig.setThreshold_ID(rs.getInt("Threshold_ID"));
-//                getconfig.setPatient_ID(rs.getInt("Patient_ID")+"");
-//                getconfig.setStaff_ID(rs.getInt("Staff_ID")+"");
-//                getconfig.setDevice_ID(rs.getString("Device_ID"));
-//                getconfig.setWeek_NO(rs.getInt("Week_NO"));
-//                getconfig.setThreshold_DateTime(rs.getString("Threshold_DateTime"));
-//                getconfig.setThreshold_1(rs.getInt("Threshold_1"));
-//                getconfig.setThreshold_2(rs.getInt("Threshold_2"));
-//                getconfig.setThreshold_3(rs.getInt("Threshold_3"));
-//                getconfig.setThreshold_4(rs.getInt("Threshold_4"));
-//                getconfig.setThreshold_5(rs.getInt("Threshold_5"));
-//                getconfig.setThreshold_6(rs.getInt("Threshold_6"));
-//                getconfig.setThreshold_7(rs.getInt("Threshold_7"));
-//                getconfig.setThreshold_8(rs.getInt("Threshold_8"));
-//                getconfig.setThreshold_9(rs.getInt("Threshold_9"));
-//                getconfig.setThreshold_10(rs.getInt("Threshold_10"));
-//                getconfig.setNoDayinWeek(rs.getInt("NoDayinWeek"));
-//                getconfig.setNoSetinDay(rs.getInt("NoSetinDay"));
-//                getconfig.setNoTimeinSet(rs.getInt("NoTimeinSet"));
-                
-//                getConfig.getConfiguration().add(getconfig);
-                
-//            }
-            
-            
-
+            if(noData){
+                getcurrent = new Current();
+            }
+//            }    
+            if(!stmt.isClosed()){
+                stmt.close();
+            }
             } catch(SQLException e){
                 e.printStackTrace();
                 System.err.println("SQLException");
             }
         } else {
             System.out.println("Failed to make connection!");
+        }
+        try {
+            if(!connection.isClosed()){
+                System.out.println("Close connection");
+                connection.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GetCurrentAcc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
  

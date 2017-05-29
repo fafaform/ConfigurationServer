@@ -25,24 +25,24 @@ public class Configuration {
     public String NoTimeinSet;
     
     public Configuration(){
-        Threshold_ID = "null";
-        Patient_ID = "null";
-        Staff_ID = "null";
-        Device_ID = "null";
-        Week_NO = "null";
-        Threshold_1 = "null";
-        Threshold_2 = "null";
-        Threshold_3 = "null";
-        Threshold_4 = "null";
-        Threshold_5 = "null";
-        Threshold_6 = "null";
-        Threshold_7 = "null";
-        Threshold_8 = "null";
-        Threshold_9 = "null";
-        Threshold_10 = "null";
-        NoDayinWeek = "null";
-        NoSetinDay = "null";
-        NoTimeinSet = "null";
+//        Threshold_ID = "null";
+//        Patient_ID = "null";
+//        Staff_ID = "null";
+//        Device_ID = "null";
+//        Week_NO = "null";
+//        Threshold_1 = "null";
+//        Threshold_2 = "null";
+//        Threshold_3 = "null";
+//        Threshold_4 = "null";
+//        Threshold_5 = "null";
+//        Threshold_6 = "null";
+//        Threshold_7 = "null";
+//        Threshold_8 = "null";
+//        Threshold_9 = "null";
+//        Threshold_10 = "null";
+//        NoDayinWeek = "null";
+//        NoSetinDay = "null";
+//        NoTimeinSet = "null";
     }
     
 //    @XmlElement
@@ -82,82 +82,82 @@ public class Configuration {
 
 //    @XmlElement
     @XmlTransient
-    public void setThreshold_1(int Threshold_1) {
-        if(Threshold_1 != 0){
+    public void setThreshold_1(String Threshold_1) {
+//        if(Threshold_1 != 0){
             this.Threshold_1 = Threshold_1+"";
-        }else this.Threshold_1 = "null";
+//        }else this.Threshold_1 = "null";
     }
 
 //    @XmlElement
     @XmlTransient
-    public void setThreshold_2(int Threshold_2) {
-        if(Threshold_2 != 0){
+    public void setThreshold_2(String Threshold_2) {
+//        if(Threshold_2 != 0){
             this.Threshold_2 = Threshold_2+"";
-        }else this.Threshold_2 = "null";
+//        }else this.Threshold_2 = "null";
     }
 
 //    @XmlElement
     @XmlTransient
-    public void setThreshold_3(int Threshold_3) {
-        if(Threshold_3 != 0){
+    public void setThreshold_3(String Threshold_3) {
+//        if(Threshold_3 != 0){
             this.Threshold_3 = Threshold_3+"";
-        }else this.Threshold_3 = "null";
+//        }else this.Threshold_3 = "null";
     }
 
 //    @XmlElement
     @XmlTransient
-    public void setThreshold_4(int Threshold_4) {
-        if(Threshold_4 != 0){
+    public void setThreshold_4(String Threshold_4) {
+//        if(Threshold_4 != 0){
             this.Threshold_4 = Threshold_4+"";
-        }else this.Threshold_4 = "null";
+//        }else this.Threshold_4 = "null";
     }
 
 //    @XmlElement
     @XmlTransient
-    public void setThreshold_5(int Threshold_5) {
-        if(Threshold_5 != 0){
+    public void setThreshold_5(String Threshold_5) {
+//        if(Threshold_5 != 0){
             this.Threshold_5 = Threshold_5+"";
-        }else this.Threshold_5 = "null";
+//        }else this.Threshold_5 = "null";
     }
 
 //    @XmlElement
     @XmlTransient
-    public void setThreshold_6(int Threshold_6) {
-        if(Threshold_6 != 0){
+    public void setThreshold_6(String Threshold_6) {
+//        if(Threshold_6 != 0){
             this.Threshold_6 = Threshold_6+"";
-        }else this.Threshold_6 = "null";
+//        }else this.Threshold_6 = "null";
     }
 
 //    @XmlElement
     @XmlTransient
-    public void setThreshold_7(int Threshold_7) {
-        if(Threshold_7 != 0){
+    public void setThreshold_7(String Threshold_7) {
+//        if(Threshold_7 != 0){
             this.Threshold_7 = Threshold_7+"";
-        }else this.Threshold_7 = "null";
+//        }else this.Threshold_7 = "null";
     }
 
 //    @XmlElement
     @XmlTransient
-    public void setThreshold_8(int Threshold_8) {
-        if(Threshold_8 != 0){
+    public void setThreshold_8(String Threshold_8) {
+//        if(Threshold_8 != 0){
             this.Threshold_8 = Threshold_8+"";
-        }else this.Threshold_8 = "null";
+//        }else this.Threshold_8 = "null";
     }
 
 //    @XmlElement
     @XmlTransient
-    public void setThreshold_9(int Threshold_9) {
-        if(Threshold_9 != 0){
+    public void setThreshold_9(String Threshold_9) {
+//        if(Threshold_9 != 0){
             this.Threshold_9 = Threshold_9+"";
-        }else this.Threshold_9 = "null";
+//        }else this.Threshold_9 = "null";
     }
 
 //    @XmlElement
     @XmlTransient
-    public void setThreshold_10(int Threshold_10) {
-        if(Threshold_10 != 0){
+    public void setThreshold_10(String Threshold_10) {
+//        if(Threshold_10 != 0){
             this.Threshold_10 = Threshold_10+"";
-        }else this.Threshold_10 = "null";
+//        }else this.Threshold_10 = "null";
     }
 
 //    @XmlElement

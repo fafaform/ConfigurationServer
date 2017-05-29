@@ -18,73 +18,67 @@ import javax.net.ssl.X509TrustManager;
  * @author ZENBOOK
  */
 public class SendGet {
+
     private final String USER_AGENT = "Mango M2M HTTP Sender publisher";
 
     public void sendGet() throws Exception {
 
 //		String url = "https://172.31.0.99/api/im";
-                String url = "https://nbtcrehab.eng.psu.ac.th/api/im";
+        String url = "https://nbtcrehab.eng.psu.ac.th/api/im";
 
-		URL obj = new URL(url);
-                ///////////////////////////////////
-                
-                TrustManager[] trustAllCerts = new TrustManager[]{
-                    new X509TrustManager() {
+        URL obj = new URL(url);
+        ///////////////////////////////////
 
-                        public java.security.cert.X509Certificate[] getAcceptedIssuers()
-                        {
-                            return null;
-                        }
-                        public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType)
-                        {
-                            //No need to implement.
-                        }
-                        public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType)
-                        {
-                            //No need to implement.
-                        }
-                    }
-            };
+        TrustManager[] trustAllCerts = new TrustManager[]{
+            new X509TrustManager() {
 
-            // Install the all-trusting trust manager
-            try 
-            {
-                SSLContext sc = SSLContext.getInstance("SSL");
-                sc.init(null, trustAllCerts, new java.security.SecureRandom());
-                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-            } 
-            catch (Exception e) 
-            {
-                System.out.println(e);
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+                public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+                    //No need to implement.
+                }
+
+                public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+                    //No need to implement.
+                }
             }
-                
-                
-                
-                ///////////////////////////////////
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+        };
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
-		// optional default is GET
-		con.setRequestMethod("GET");
+        ///////////////////////////////////
+        HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
-		//add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
+        // optional default is GET
+        con.setRequestMethod("GET");
 
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
+        //add request header
+        con.setRequestProperty("User-Agent", USER_AGENT);
 
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
 
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
 
-		//print result
-		System.out.println(response.toString());
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        
+        //print result
+        System.out.println(response.toString());
 
-	}
+    }
 }

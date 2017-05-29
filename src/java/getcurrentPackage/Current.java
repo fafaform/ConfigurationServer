@@ -10,12 +10,26 @@ public class Current {
     public String Device_ID;
     public String Week_NO;
     public String Day_NO;
-    public String End_DateTime;
+    public String Set_NO;
     public String Time_NO;
+    public String End_DateTime;
     public String NoDayinWeek;
     public String NoSetinDay;
     public String NoTimeinSet;
-    public String Set_NO;
+    
+    
+    public Current(){
+//        Patient_ID = "null";
+//        Device_ID = "null";
+//        Week_NO = "null";
+//        Day_NO = "null";
+//        End_DateTime = "null";
+//        Time_NO = "null";
+//        NoDayinWeek = "null";
+//        NoSetinDay = "null";
+//        NoTimeinSet = "null";
+//        Set_NO = "null";
+    }
     
 
 //    @XmlElement
@@ -33,64 +47,64 @@ public class Current {
 //    @XmlElement
     @XmlTransient
     public void setWeek_NO(int Week_NO) {
-        if(Week_NO != 0){
+//        if(Week_NO != 0){
             this.Week_NO = Week_NO+"";
-        }else this.Week_NO = "null";
-    }
-
-//    @XmlElement
-    @XmlTransient
-    public void setNoDayinWeek(int NoDayinWeek) {
-        if(NoDayinWeek != 0){
-            this.NoDayinWeek = NoDayinWeek+"";
-        }else this.NoDayinWeek = "null";
-    }
-
-//    @XmlElement
-    @XmlTransient
-    public void setNoSetinDay(int NoSetinDay) {
-        if(NoSetinDay != 0){
-            this.NoSetinDay = NoSetinDay+"";
-        }else this.NoSetinDay = "null";
-    }
-
-//    @XmlElement
-    @XmlTransient
-    public void setNoTimeinSet(int NoTimeinSet) {
-        if(NoTimeinSet != 0){
-            this.NoTimeinSet = NoTimeinSet+"";
-        }else this.NoTimeinSet = "null";
+//        }else this.Week_NO = "null";
     }
     
-//    @XmlElement
+    //    @XmlElement
     @XmlTransient
     public void setDay_NO(int Day_NO) {
-        if(Day_NO != 0){
+//        if(Day_NO != 0){
             this.Day_NO = Day_NO+"";
-        }else this.Day_NO = "null";
+//        }else this.Day_NO = "null";
     }
 
 //    @XmlElement
     @XmlTransient
     public void setSet_NO(int Set_NO) {
-        if(Set_NO != 0){
+//        if(Set_NO != 0){
             this.Set_NO = Set_NO+"";
-        }else this.Set_NO = "null";
+//        }else this.Set_NO = "null";
     }
 
 //    @XmlElement
     @XmlTransient
     public void setTime_NO(int Time_NO) {
-        if(Time_NO != 0){
+//        if(Time_NO != 0){
             this.Time_NO = Time_NO+"";
-        }else this.Time_NO = "null";
+//        }else this.Time_NO = "null";
+    }
+
+//    @XmlElement
+    @XmlTransient
+    public void setNoDayinWeek(int NoDayinWeek) {
+//        if(NoDayinWeek != 0){
+            this.NoDayinWeek = NoDayinWeek+"";
+//        }else this.NoDayinWeek = "null";
+    }
+
+//    @XmlElement
+    @XmlTransient
+    public void setNoSetinDay(int NoSetinDay) {
+//        if(NoSetinDay != 0){
+            this.NoSetinDay = NoSetinDay+"";
+//        }else this.NoSetinDay = "null";
+    }
+
+//    @XmlElement
+    @XmlTransient
+    public void setNoTimeinSet(int NoTimeinSet) {
+//        if(NoTimeinSet != 0){
+            this.NoTimeinSet = NoTimeinSet+"";
+//        }else this.NoTimeinSet = "null";
     }
     
     @XmlTransient
     public void setEnd_DateTime(String End_DateTime) {
-        if(!End_DateTime.equals("0")){
+//        if(!End_DateTime.equals("0")){
             this.End_DateTime = End_DateTime;
-        }else this.End_DateTime = "null";
+//        }else this.End_DateTime = "null";
     }
     
     public String getPatient_ID() {
