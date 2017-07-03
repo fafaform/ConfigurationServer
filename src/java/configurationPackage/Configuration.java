@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Configuration {
     public String Threshold_ID;
     public String Patient_ID;
+    public String User_ID;
     public String Staff_ID;
     public String Device_ID;
     public String Week_NO;
@@ -54,6 +55,11 @@ public class Configuration {
     @XmlTransient
     public void setPatient_ID(String Patient_ID) {
         this.Patient_ID = Patient_ID;
+    }
+
+    @XmlTransient
+    public void setUser_ID(String User_ID) {
+        this.User_ID = User_ID;
     }
 
 //    @XmlElement
@@ -184,6 +190,10 @@ public class Configuration {
     
     public String getPatient_ID() {
         return Patient_ID;
+    }
+    
+    public String getUser_ID() {
+        return User_ID;
     }
 
     public String getStaff_ID() {

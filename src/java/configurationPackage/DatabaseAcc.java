@@ -82,6 +82,7 @@ public class DatabaseAcc {
         Connection connection = null;
         try {
 //            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/nbtcdb","root", "");
+//            connection = DriverManager.getConnection("jdbc:mysql://202.29.148.77:3306/nbtcdb","nbtcAdmin", "Admin2558");
             connection = DriverManager.getConnection("jdbc:mysql://nbtcrehab.eng.psu.ac.th:3306/nbtcdb","nbtcAdmin", "Admin2558");
 //            connection = DriverManager.getConnection("jdbc:mysql://172.31.0.99:3306/nbtcdb", "nbtcAdmin", "Admin2558");
         } catch (SQLException e) {
@@ -99,8 +100,14 @@ public class DatabaseAcc {
                 thcount.last();
                 int thc = thcount.getInt(thcount.getRow());
                 thcount.close();
+                
+                String SELECT_QUERY_user_id = "SELECT MAX(User_ID) FROM patient WHERE Patient_ID=\'" + Patient_ID + "\'";
+                ResultSet userId = stmt.executeQuery(SELECT_QUERY_user_id);
+                userId.last();
+                int USERID = userId.getInt(userId.getRow());
+                userId.close();
 
-                String SELECT_QUERY_patientWeek_weekNO = "SELECT MAX(Week_NO) FROM patient_week WHERE Patient_ID=" + Patient_ID + " AND Device_ID=\'" + Device_ID + "\'";
+                String SELECT_QUERY_patientWeek_weekNO = "SELECT MAX(Week_NO) FROM patient_week WHERE Patient_ID=" + USERID + " AND Device_ID=\'" + Device_ID + "\'";
                 ResultSet wno = stmt.executeQuery(SELECT_QUERY_patientWeek_weekNO);
                 wno.last();
                 int week_NO = wno.getInt(wno.getRow());
@@ -116,14 +123,14 @@ public class DatabaseAcc {
                 int time_NO;
 
                 if (week_NO != 0) {
-                    String SELECT_QUERY_threshold_weekNO = "SELECT NoDayinWeek FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + Patient_ID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + ")";
+                    String SELECT_QUERY_threshold_weekNO = "SELECT NoDayinWeek FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + USERID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + ")";
                     ResultSet rs2 = stmt.executeQuery(SELECT_QUERY_threshold_weekNO);
                     rs2.last();
                     nDinW = rs2.getInt(rs2.getRow());
                     System.out.println("nDinW: " + nDinW);
                     rs2.beforeFirst();
                     rs2.close();
-                    String SELECT_QUERY_patientWeek_dayNO = "SELECT MAX(Day_NO) FROM patient_week WHERE Patient_ID=" + Patient_ID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + "";
+                    String SELECT_QUERY_patientWeek_dayNO = "SELECT MAX(Day_NO) FROM patient_week WHERE Patient_ID=" + USERID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + "";
                     ResultSet dno = stmt.executeQuery(SELECT_QUERY_patientWeek_dayNO);
                     dno.last();
                     day_NO = dno.getInt(dno.getRow());
@@ -131,14 +138,14 @@ public class DatabaseAcc {
                     dno.beforeFirst();
                     dno.close();
 
-                    String SELECT_QUERY_threshold_weekNO_set = "SELECT NoSetinDay FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + Patient_ID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + ")";
+                    String SELECT_QUERY_threshold_weekNO_set = "SELECT NoSetinDay FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + USERID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + ")";
                     ResultSet rs2_set = stmt.executeQuery(SELECT_QUERY_threshold_weekNO_set);
                     rs2_set.last();
                     nSinD = rs2_set.getInt(rs2_set.getRow());
                     System.out.println("nSinD: " + nSinD);
                     rs2_set.beforeFirst();
                     rs2_set.close();
-                    String SELECT_QUERY_patientWeek_setNO = "SELECT MAX(Set_NO) FROM patient_week WHERE Patient_ID=" + Patient_ID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + " AND Day_NO=" + day_NO + "";
+                    String SELECT_QUERY_patientWeek_setNO = "SELECT MAX(Set_NO) FROM patient_week WHERE Patient_ID=" + USERID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + " AND Day_NO=" + day_NO + "";
                     ResultSet sno = stmt.executeQuery(SELECT_QUERY_patientWeek_setNO);
                     sno.last();
                     set_NO = sno.getInt(sno.getRow());
@@ -146,14 +153,14 @@ public class DatabaseAcc {
                     sno.beforeFirst();
                     sno.close();
 
-                    String SELECT_QUERY_threshold_weekNO_time = "SELECT NoTimeinSet FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + Patient_ID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + ")";
+                    String SELECT_QUERY_threshold_weekNO_time = "SELECT NoTimeinSet FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + USERID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + ")";
                     ResultSet rs2_time = stmt.executeQuery(SELECT_QUERY_threshold_weekNO_time);
                     rs2_time.last();
                     nTinS = rs2_time.getInt(rs2_time.getRow());
                     System.out.println("nTinS: " + nTinS);
                     rs2_time.beforeFirst();
                     rs2_time.close();
-                    String SELECT_QUERY_patientWeek_timeNO = "SELECT MAX(Time_NO) FROM patient_week WHERE Patient_ID=" + Patient_ID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + " AND Day_NO=" + day_NO + " AND Set_NO=" + set_NO + "";
+                    String SELECT_QUERY_patientWeek_timeNO = "SELECT MAX(Time_NO) FROM patient_week WHERE Patient_ID=" + USERID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + " AND Day_NO=" + day_NO + " AND Set_NO=" + set_NO + "";
                     ResultSet tno = stmt.executeQuery(SELECT_QUERY_patientWeek_timeNO);
                     tno.last();
                     time_NO = tno.getInt(tno.getRow());
@@ -172,7 +179,7 @@ public class DatabaseAcc {
 
                 String SELECT_QUERY;
                 if (!week.equals("")) {
-                    SELECT_QUERY = "SELECT * FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + Patient_ID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week + ")";
+                    SELECT_QUERY = "SELECT * FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + USERID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week + ")";
 //                SELECT_QUERY = "SELECT * FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+week+"";
                     day_NO = 1;
                     nDinW = 1;
@@ -182,11 +189,11 @@ public class DatabaseAcc {
                     time_NO = 1;
                     System.out.println("given week");
                 } else if ((day_NO >= nDinW && set_NO >= nSinD && time_NO >= nTinS) || week_NO == 0) {
-                    SELECT_QUERY = "SELECT * FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + Patient_ID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + (week_NO + 1) + ")";
+                    SELECT_QUERY = "SELECT * FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + USERID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + (week_NO + 1) + ")";
 //                SELECT_QUERY = "SELECT * FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+(week_NO+1)+"";
                     System.out.println("next week");
                 } else {
-                    SELECT_QUERY = "SELECT * FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + Patient_ID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + ")";
+                    SELECT_QUERY = "SELECT * FROM threshold WHERE Threshold_ID IN (SELECT MAX(Threshold_ID) FROM threshold WHERE Patient_ID=" + USERID + " AND Device_ID=\'" + Device_ID + "\'" + " AND Week_NO=" + week_NO + ")";
 //                SELECT_QUERY = "SELECT * FROM threshold WHERE Patient_ID="+Patient_ID+" AND Device_ID=\'"+Device_ID+"\'"+" AND Week_NO="+(week_NO)+"";
                     System.out.println("current week");
                 }
@@ -203,7 +210,8 @@ public class DatabaseAcc {
                     getconfig = new Configuration();
 
                     getconfig.setThreshold_ID(rs.getInt("Threshold_ID"));
-                    getconfig.setPatient_ID(rs.getInt("Patient_ID") + "");
+                    getconfig.setPatient_ID(Patient_ID);
+                    getconfig.setUser_ID(rs.getInt("Patient_ID") + "");
                     getconfig.setStaff_ID(rs.getInt("Staff_ID") + "");
                     getconfig.setDevice_ID(rs.getString("Device_ID"));
                     getconfig.setWeek_NO(rs.getInt("Week_NO"));
